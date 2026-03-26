@@ -8,14 +8,15 @@ import java.util.logging.*;
 
 public class ReportService {
     private static final Logger logger = Logger.getLogger(ReportService.class.getName());
-    private static final String reportDirectory = "reports";
+    private static final String REPORT_DIRECTORY = "reports";
     private static final String defaultFileName = "results.txt";
 
+    // Verify reports folder and create if it does not exist
     public ReportService() {
-        File directory = new File(reportDirectory);
+        File directory = new File(REPORT_DIRECTORY);
         if (!directory.exists()) {
             if (directory.mkdirs()) {
-                logger.info("Report directory created: " + reportDirectory);
+                logger.info("Report directory created: " + REPORT_DIRECTORY);
             }
         }
     }
@@ -33,7 +34,7 @@ public class ReportService {
 
     // Save list to file
     public void saveToFile(String title, List<String> items) {
-        File file = new File(reportDirectory, defaultFileName);
+        File file = new File(REPORT_DIRECTORY, defaultFileName);
         try (FileWriter writer = new FileWriter(file, true)) {
 
             writer.write(title + "\n");
@@ -48,8 +49,9 @@ public class ReportService {
             logger.severe("Failed to write to report: " + e.getMessage());        }
     }
 
+    // Delete old file
     public void clearOldReport() {
-        File file = new File(reportDirectory, defaultFileName);
+        File file = new File(REPORT_DIRECTORY, defaultFileName);
         if (file.exists() && file.delete()) {
             logger.info("Old report cleared");
         }

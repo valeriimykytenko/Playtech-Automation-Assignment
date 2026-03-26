@@ -23,13 +23,13 @@ public class PlaytechTest {
         driver.manage().window().maximize();
         site = new PlaytechSite(driver);
 
-        // Initialize browser and main test dependencies
+        // Prepare clean reporting environment
         report.clearOldReport();
     }
 
     @Test
-    @DisplayName("Task 1: Verify website is opened")
     @Order(1)
+    @DisplayName("Task 1: Verify website is opened")
     public void websiteOpensChecking() {
 
         // Open homepage and verify correct page is loaded
@@ -40,11 +40,12 @@ public class PlaytechTest {
         Assertions.assertEquals(
                 expectedTitle,
                 actualTitle);
+        System.out.println("Home page opened");
     }
 
     @Test
-    @DisplayName("Task 2: Verify all team names are present")
     @Order(2)
+    @DisplayName("Task 2: Verify all team names are present")
     public void testTeamNamesExtraction() {
 
         // Extract and validate team data from homepage
@@ -53,15 +54,23 @@ public class PlaytechTest {
                 teamNames.isEmpty(),
                 "Team list is empty!");
 
-        report.printList("Teams", teamNames);
-
-        // Save results to file for reporting purposes
-        report.saveToFile("Task 2: Teams", teamNames);
     }
 
     @Test
-    @DisplayName("Task 3: Verify research areas content")
     @Order(3)
+    @DisplayName("Task 2.1: Verify team names are unique")
+    public void testTeamNamesUnique() {
+        List<String> teamNames = site.getTeamNames();
+        long uniqueCount = teamNames.stream().distinct().count();
+
+        Assertions.assertEquals(
+                teamNames.size(), uniqueCount,
+                "Duplicate team names found!");
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Task 3: Verify research areas content")
     public void testResearchAreas() {
 
         // Extract and validate team data from homepage
@@ -70,24 +79,29 @@ public class PlaytechTest {
                 research.size() >= 3,
                 "Too few research areas found!"
         );
-
-        report.printList("Research", research);
-        report.saveToFile("Task 3: Research", research);
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DisplayName("Task 4: Verify Estonia job listings")
-    public void testEstoniaJobs() {
-
-        // Ensure browser session is properly closed
-        List<String> jobs = site.getEstoniaJobLinks();
+    public void getEstoniaJobLinks() {
+        List<String> jobs = site.getJobsLinksByLocation("estonia");
         Assertions.assertFalse(
                 jobs.isEmpty(),
                 "No jobs found in Estonia!");
+    }
 
-        report.printList("Estonia Jobs", jobs);
-        report.saveToFile("Task 4: Jobs", jobs);
+    @Test
+    @Order(6)
+    @DisplayName("Task 4.1: Verify job links format")
+    public void testJobLinksFormat() {
+        List<String> jobs = site.getJobsLinksByLocation("estonia");
+
+        for (String link : jobs) {
+            Assertions.assertTrue(
+                    link.startsWith("https"),
+                    "Invalid job link: " + link);
+        }
     }
 
     @AfterAll
