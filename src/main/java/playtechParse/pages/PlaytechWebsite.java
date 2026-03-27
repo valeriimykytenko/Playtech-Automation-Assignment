@@ -2,50 +2,60 @@ package playtechParse.pages;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
-public class PlaytechSite extends BasePage {
+/**
+ * Page object for Playtech People website
+ * Contains data extraction methods used in tests
+ */
+public class PlaytechWebsite extends BasePage {
 
-    private String baseUrl = "https://www.playtechpeople.com";
+    private static final String DEFAULT_URL = "https://www.playtechpeople.com";
 
-    // Constructor to initialize the driver session
-    public PlaytechSite(WebDriver driver) {
+    public static final String LOCATION_ESTONIA = "estonia";
+
+    private static String resolveBaseUrl() {
+        String prop = System.getProperty("base.url");
+        if (prop != null) return prop;
+        return DEFAULT_URL;
+    }
+
+    private final String baseUrl = resolveBaseUrl();
+
+    public PlaytechWebsite(WebDriver driver) {
         super(driver);
     }
 
-    public void openHome() {
+    // Opens homepage and returns title
+    public String getHomeTitle() {
         openUrl(baseUrl);
+        return driver.getTitle();
     }
 
-    //Extract all visible team names
+    // Opens homepage and returns title (used for quick smoke check)
     public List<String> getTeamNames() {
-        // Locate and store a list of all team cards
         openUrl(baseUrl);
         By teamCards = By.className("team-card");
         List<WebElement> teams = driver.findElements(teamCards);
         List<String> names = new ArrayList<>();
-
-        // Iterate through the team list
         for (WebElement team : teams) {
             names.add(team.getText());
         }
         return names;
     }
 
-    //Navigate to "Who we are" page and extract Research section data
+    // Opens "Life at Playtech" page and extracts research areas
     public List<String> getResearchAreas() {
         String url = baseUrl + "/life-at-playtech/";
         openUrl(url);
 
         By researchButton = By.cssSelector("#heading-6-4-6 button");
         By selector = By.cssSelector("#collapse-6-4-6 ul ul li");
-
         scrollToElement(researchButton);
-
         clickJs(researchButton);
-
         List<WebElement> items = findAll(selector);
-        // Extract  research list
 
         List<String> areas = new ArrayList<>();
         for (WebElement item : items) {
@@ -55,25 +65,25 @@ public class PlaytechSite extends BasePage {
         return areas;
     }
 
-    //Method return links for vacancies from Estonia
+    // Returns job links filtered by location
     public List<String> getJobsLinksByLocation(String location) {
         String url = baseUrl + "/jobs-our/";
         openUrl(url);
-        // Wait until job elements are loaded
         By jobItems = By.className("job-item");
-
-        // Collect all job cards
         List<WebElement> jobs = findAll(jobItems);
-        List<String> estoniaLinks = new ArrayList<>();
+        List<String> locationLinks = new ArrayList<>();
 
-
-        // Filter jobs by 'data-location' attribute
         for (WebElement job : jobs) {
             String dataLocation = job.getAttribute("data-location");
             if (location.equalsIgnoreCase(dataLocation)) {
-                estoniaLinks.add(job.getAttribute("href"));
+                locationLinks.add(job.getAttribute("href"));
             }
         }
-        return estoniaLinks;
+        return locationLinks;
+    }
+
+    // Shortcut for Estonia jobs (used in tests)
+    public List<String> getEstoniaJobLinks() {
+        return getJobsLinksByLocation(LOCATION_ESTONIA);
     }
 }
