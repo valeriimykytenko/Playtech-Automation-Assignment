@@ -9,9 +9,9 @@ import java.util.logging.*;
 public class ReportService {
     private static final Logger logger = Logger.getLogger(ReportService.class.getName());
     private static final String REPORT_DIRECTORY = "reports";
-    private static final String defaultFileName = "results.txt";
+    private static final String DEFAULT_FILE_NAME = "results.txt";
 
-    // Verify reports folder and create if it does not exist
+    // Ensure report directory exists before writing results
     public ReportService() {
         File directory = new File(REPORT_DIRECTORY);
         if (!directory.exists()) {
@@ -21,26 +21,24 @@ public class ReportService {
         }
     }
 
-    // Print list to console
     public void printList(String title, List<String> items) {
         System.out.println("--- " + title + " ---");
         if (items.isEmpty()) {
-            logger.warning("Attempted to print an empty list for: " + title);
+            logger.info("Attempted to print an empty list for: " + title);
             return;
         }
         items.forEach(item -> System.out.println("- " + item));
         System.out.println();
     }
 
-    // Save list to file
     public void saveToFile(String title, List<String> items) {
-        File file = new File(REPORT_DIRECTORY, defaultFileName);
+        File file = new File(REPORT_DIRECTORY, DEFAULT_FILE_NAME );
         try (FileWriter writer = new FileWriter(file, true)) {
 
             writer.write(title + "\n");
 
             for (String item : items) {
-                writer.write(" -" + item + "\n");
+                writer.write("- " + item + "\n");
             }
 
             writer.write("\n");
@@ -49,9 +47,8 @@ public class ReportService {
             logger.severe("Failed to write to report: " + e.getMessage());        }
     }
 
-    // Delete old file
-    public void clearOldReport() {
-        File file = new File(REPORT_DIRECTORY, defaultFileName);
+    public void deleteOldReport() {
+        File file = new File(REPORT_DIRECTORY, DEFAULT_FILE_NAME );
         if (file.exists() && file.delete()) {
             logger.info("Old report cleared");
         }
