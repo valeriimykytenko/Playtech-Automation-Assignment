@@ -7,6 +7,11 @@ import playtechParse.services.ReportService;
 
 import java.util.List;
 
+/**
+ * Entry point to run the data extraction without JUnit.
+ * Opens the site, collects required data,
+ * and writes results to a file.
+ */
 public class Main {
     private PlaytechWebsite site;
     private ReportService report;

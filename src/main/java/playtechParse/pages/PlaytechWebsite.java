@@ -7,8 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
- * Page object for Playtech People website
- * Contains data extraction methods used in tests
+ * Page Object representing playtechpeople.com
+ * Contains methods fot extracting UI data used in tests
  */
 public class PlaytechWebsite extends BasePage {
 
@@ -34,7 +34,7 @@ public class PlaytechWebsite extends BasePage {
         return driver.getTitle();
     }
 
-    // Opens homepage and returns title (used for quick smoke check)
+    // Extract all team names displayed on homepage
     public List<String> getTeamNames() {
         openUrl(baseUrl);
         By teamCards = By.className("team-card");
@@ -46,7 +46,7 @@ public class PlaytechWebsite extends BasePage {
         return names;
     }
 
-    // Opens "Life at Playtech" page and extracts research areas
+    // Navigates to "Life at Playtech" page and extracts research areas
     public List<String> getResearchAreas() {
         String url = baseUrl + "/life-at-playtech/";
         openUrl(url);
@@ -65,7 +65,7 @@ public class PlaytechWebsite extends BasePage {
         return areas;
     }
 
-    // Returns job links filtered by location
+    // Returns jobs links filtered by location
     public List<String> getJobsLinksByLocation(String location) {
         String url = baseUrl + "/jobs-our/";
         openUrl(url);
@@ -86,14 +86,16 @@ public class PlaytechWebsite extends BasePage {
         return getJobsLinksByLocation(LOCATION_ESTONIA);
     }
 
-
+    // Opens Estonia jobs links and checks page content for both Tallinn and Tartu
     public String getJobLinkForTallinnAndTartu() {
-        List<String> links = getEstoniaJobLinks();
+        List<String> links = getJobsLinksByLocation(LOCATION_ESTONIA);
 
         for (String link : links) {
             openUrl(link);
             String pageSource = getPageText();
-            if (pageSource.contains("Tallinn") && pageSource.contains("Tartu")) {
+            boolean isTallinn = pageSource.contains("Tallinn");
+            boolean isTartu = pageSource.contains("Tartu");
+            if (isTallinn && isTartu) {
                 return link;
             }
         }

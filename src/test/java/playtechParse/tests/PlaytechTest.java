@@ -14,7 +14,6 @@ import playtechParse.services.ReportService;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.DisplayName.class)
 public class PlaytechTest {
-    private WebDriver driver;
     private PlaytechWebsite site;
     private ReportService report;
     private WebDriverManager driverManager ;
@@ -22,7 +21,7 @@ public class PlaytechTest {
     @BeforeAll
     public void setup() {
         driverManager  = new WebDriverManager();
-        driver = driverManager.createDriver();
+        WebDriver driver = driverManager.createDriver();
         report = new ReportService();
         report.deleteOldReport();
         site = new PlaytechWebsite(driver);

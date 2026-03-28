@@ -31,6 +31,7 @@ public class ReportService {
         System.out.println();
     }
 
+    // Append results to a single file to keep all output data
     public void saveToFile(String title, List<String> items) {
         File file = new File(REPORT_DIRECTORY, DEFAULT_FILE_NAME );
         try (FileWriter writer = new FileWriter(file, true)) {
@@ -47,6 +48,7 @@ public class ReportService {
             logger.severe("Failed to write to report: " + e.getMessage());        }
     }
 
+    // Clean previous test results to avoid mixing data
     public void deleteOldReport() {
         File file = new File(REPORT_DIRECTORY, DEFAULT_FILE_NAME );
         if (file.exists() && file.delete()) {
