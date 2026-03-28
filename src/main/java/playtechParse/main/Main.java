@@ -33,9 +33,9 @@ public class Main {
         report.printList("Research areas", research);
         report.saveToFile("Task 3: Research areas", research);
 
-        List<String> jobs = site.getEstoniaJobLinks();
-        report.printList("Estonia Jobs Links", jobs);
-        report.saveToFile("Task 4: Jobs Links from Estonia", jobs);
+        String job = site.getJobLinkForTallinnAndTartu();
+        report.printList("Tallinn & Tartu Job", List.of(job));
+        report.saveToFile("Task 4: Tallinn & Tartu Job", List.of(job));
     }
 
     public static void main(String[] args) {

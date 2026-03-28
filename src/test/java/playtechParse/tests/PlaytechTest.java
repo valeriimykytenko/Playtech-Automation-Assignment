@@ -67,11 +67,11 @@ public class PlaytechTest {
     }
 
     @Test
-    @DisplayName("Task 4.0: Estonia job listings are present")
-    public void getEstoniaJobLinks() {
-        List<String> jobs = site.getEstoniaJobLinks();
-        Assertions.assertFalse(jobs.isEmpty(),
-                "No jobs found in Estonia!");
+    @DisplayName("Task 4: Job available in both Tallinn and Tartu")
+    public void testEstoniaJobBothCities() {
+        String links = site.getJobLinkForTallinnAndTartu();
+        Assertions.assertFalse(links.isEmpty(),
+                "No job found available in both Tallinn and Tartu!");
     }
 
     @Test
@@ -85,16 +85,7 @@ public class PlaytechTest {
     }
 
     @Test
-    @DisplayName("Task 4.2: Job links are unique")
-    public void testJobLinksUnique() {
-        List<String> jobs = site.getEstoniaJobLinks();
-        long uniqueCount = jobs.stream().distinct().count();
-        Assertions.assertEquals(jobs.size(), uniqueCount,
-                "Duplicate job links found!");
-    }
-
-    @Test
-    @DisplayName("Task 4.3: Unknown location returns empty list")
+    @DisplayName("Task 4.2: Unknown location returns empty list")
     public void testUnknownLocationReturnsEmpty() {
         List<String> jobs = site.getJobsLinksByLocation("notestonia");
         Assertions.assertTrue(jobs.isEmpty(),

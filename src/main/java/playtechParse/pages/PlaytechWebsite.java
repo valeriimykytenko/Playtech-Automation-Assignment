@@ -82,8 +82,21 @@ public class PlaytechWebsite extends BasePage {
         return locationLinks;
     }
 
-    // Shortcut for Estonia jobs (used in tests)
     public List<String> getEstoniaJobLinks() {
         return getJobsLinksByLocation(LOCATION_ESTONIA);
+    }
+
+
+    public String getJobLinkForTallinnAndTartu() {
+        List<String> links = getEstoniaJobLinks();
+
+        for (String link : links) {
+            openUrl(link);
+            String pageSource = getPageText();
+            if (pageSource.contains("Tallinn") && pageSource.contains("Tartu")) {
+                return link;
+            }
+        }
+        return "";
     }
 }

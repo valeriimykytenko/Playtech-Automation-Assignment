@@ -45,4 +45,8 @@ public class BasePage {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
+    protected String getPageText() {
+        return driver.getPageSource();
+    }
+
 }
