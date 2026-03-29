@@ -1,7 +1,6 @@
 package playtechParse.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,23 +24,6 @@ public class BasePage {
 
     protected void openUrl(String url){
         driver.get(url);
-    }
-
-    // Scroll element into viewpoint to avoid hidden element interaction issue
-    protected void scrollIntoViewport(By locator) {
-        WebElement element = wait.until(
-                ExpectedConditions.presenceOfElementLocated(locator));
-        ((JavascriptExecutor) driver)
-                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
-    }
-
-    // Use JavaScript click when Selenium click fails
-    protected void executeClick(By locator) {
-        WebElement element = wait.until(
-                ExpectedConditions.presenceOfElementLocated(locator));
-        wait.until(ExpectedConditions.elementToBeClickable(locator));
-        ((JavascriptExecutor) driver)
-                .executeScript("arguments[0].click();", element);
     }
 
     // Wait until elements are present in DOM and return items

@@ -10,7 +10,7 @@ It uses Java, Selenium, and JUnit to validate website content and extract requir
 ### Tech Stack
 - Java 21
 - Selenium
-- JUnit 5
+- JUnit 6
 - Maven
 
 ## How to Run
@@ -37,7 +37,7 @@ mvn test "-Dbase.url=https://www.playtechpeople.com"
 ## Architecture
 
 The project follows the **Page Object Model** pattern — all interactions with the website
-which keeps in  `PlaytechWebsite`, that is keeping all data extraction logic from the UI.  
+which keeps in `PlaytechWebsite`, that is keeping all data extraction logic from the UI.  
 `BasePage` provides Selenium utilities such as waits, JavaScript interaction, and scroll.  
 `WebDriverManager` manages browser setup and teardown.  
 `ReportService` handles output both to console and file.

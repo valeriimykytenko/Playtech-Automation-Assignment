@@ -5,7 +5,6 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import playtechParse.pages.PlaytechWebsite;
 import playtechParse.services.BrowserManager;
-import playtechParse.services.ReportService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,8 +51,9 @@ public class PlaytechTest {
     @Test
     @DisplayName("Task 3.0: Research areas are present")
     public void testResearchAreas() {
+        int researchCount = 3;
         List<String> research = site.getResearchAreas();
-        assertTrue(research.size() >= 3, "Too few research areas found!");
+        assertTrue(research.size() >= researchCount, "Too few research areas found!");
     }
 
     @Test

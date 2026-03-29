@@ -18,7 +18,7 @@ public class Main {
     private ReportService report;
     private BrowserManager driverManager ;
 
-    public void setUp(){
+    public void setup(){
         driverManager = new BrowserManager();
         driver = driverManager.createDriver();
         report = new ReportService();
@@ -43,7 +43,7 @@ public class Main {
 
     public static void main(String[] args) {
         Main app = new Main();
-        app.setUp();
+        app.setup();
         app.playParse();
         app.tearDown();
     }

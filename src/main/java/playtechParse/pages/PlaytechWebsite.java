@@ -49,10 +49,7 @@ public class PlaytechWebsite extends BasePage {
     public List<String> getResearchAreas() {
         openUrl(baseUrl + "/life-at-playtech/");
 
-        By researchButton = By.cssSelector("#heading-6-4-6 button");
         By selector = By.cssSelector("#collapse-6-4-6 ul ul li");
-        scrollIntoViewport(researchButton);
-        executeClick(researchButton);
         List<WebElement> items = findAll(selector);
 
         List<String> areas = new ArrayList<>();
