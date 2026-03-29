@@ -13,7 +13,6 @@ import org.openqa.selenium.WebElement;
 public class PlaytechWebsite extends BasePage {
 
     private static final String DEFAULT_URL = "https://www.playtechpeople.com";
-
     public static final String LOCATION_ESTONIA = "estonia";
 
     private static String resolveBaseUrl() {
@@ -48,13 +47,12 @@ public class PlaytechWebsite extends BasePage {
 
     // Navigates to "Life at Playtech" page and extracts research areas
     public List<String> getResearchAreas() {
-        String url = baseUrl + "/life-at-playtech/";
-        openUrl(url);
+        openUrl(baseUrl + "/life-at-playtech/");
 
         By researchButton = By.cssSelector("#heading-6-4-6 button");
         By selector = By.cssSelector("#collapse-6-4-6 ul ul li");
-        scrollToElement(researchButton);
-        clickJs(researchButton);
+        scrollIntoViewport(researchButton);
+        executeClick(researchButton);
         List<WebElement> items = findAll(selector);
 
         List<String> areas = new ArrayList<>();
@@ -67,8 +65,7 @@ public class PlaytechWebsite extends BasePage {
 
     // Returns jobs links filtered by location
     public List<String> getJobsLinksByLocation(String location) {
-        String url = baseUrl + "/jobs-our/";
-        openUrl(url);
+        openUrl(baseUrl + "/jobs-our/");
         By jobItems = By.className("job-item");
         List<WebElement> jobs = findAll(jobItems);
         List<String> locationLinks = new ArrayList<>();
@@ -89,13 +86,13 @@ public class PlaytechWebsite extends BasePage {
     // Opens Estonia jobs links and checks page content for both Tallinn and Tartu
     public String getJobLinkForTallinnAndTartu() {
         List<String> links = getJobsLinksByLocation(LOCATION_ESTONIA);
+        By cityLocator = By.cssSelector("spl-job-location");
 
         for (String link : links) {
             openUrl(link);
-            String pageSource = getPageText();
-            boolean isTallinn = pageSource.contains("Tallinn");
-            boolean isTartu = pageSource.contains("Tartu");
-            if (isTallinn && isTartu) {
+            if (!driver.getTitle().contains("Playtech")) continue;
+            String address = getAttribute(cityLocator, "formattedaddress");
+            if (address != null && address.contains("Tallinn") && address.contains("Tartu")) {
                 return link;
             }
         }
