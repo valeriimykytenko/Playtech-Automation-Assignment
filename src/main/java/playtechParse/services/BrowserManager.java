@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 /**
  * Manages Webdriver lifecycle and configuration
  */
-public class WebDriverManager {
+public class BrowserManager {
     protected WebDriver driver;
 
     // Run browser in headless mode for CI/CD compatibility

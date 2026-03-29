@@ -28,7 +28,7 @@ public class BasePage {
     }
 
     // Scroll element into viewpoint to avoid hidden element interaction issue
-    protected void scrollToElement(By locator) {
+    protected void scrollIntoViewport(By locator) {
         WebElement element = wait.until(
                 ExpectedConditions.presenceOfElementLocated(locator));
         ((JavascriptExecutor) driver)
@@ -36,7 +36,7 @@ public class BasePage {
     }
 
     // Use JavaScript click when Selenium click fails
-    protected void clickJs(By locator) {
+    protected void executeClick(By locator) {
         WebElement element = wait.until(
                 ExpectedConditions.presenceOfElementLocated(locator));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
@@ -49,9 +49,9 @@ public class BasePage {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
-    // Returns full page HTML for text validation
-    protected String getPageText() {
-        return driver.getPageSource();
+    protected String getAttribute(By locator, String attribute) {
+        return wait.until(ExpectedConditions
+                .presenceOfElementLocated(locator)).getAttribute(attribute);
     }
 
 }
