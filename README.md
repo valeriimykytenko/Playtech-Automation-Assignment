@@ -35,12 +35,12 @@ mvn test "-Dbase.url=https://www.playtechpeople.com"
 ## Architecture
 
 The project follows the **Page Object Model** pattern — all interactions with the website
-are contains in  `PlaytechWebsite`, that keeping all data extraction logic from the UI.  
+which keeps in  `PlaytechWebsite`, that is keeping all data extraction logic from the UI.  
 `BasePage` provides Selenium utilities such as waits, JavaScript interaction, and scroll.  
 `WebDriverManager` manages browser setup and teardown.  
-`ReportService` handels output both for console and file.
+`ReportService` handles output both to console and file.
 
-`PlaytechTest` contains end-to-end test scenarios using JUnit  
+`PlaytechTest` contains end-to-end test scenarios using JUnit.   
 `Main` provides an entry point to execute the same logic without a test framework, for quick runs and report generation.
 
 ## Output
