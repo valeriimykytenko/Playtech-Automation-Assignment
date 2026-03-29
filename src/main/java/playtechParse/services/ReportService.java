@@ -21,7 +21,12 @@ public class ReportService {
         }
     }
 
-    public void printList(String title, List<String> items) {
+    public void reportInfo(String title, List<String> items) {
+        printList(title, items);
+        saveToFile(title, items);
+    }
+
+    private void printList(String title, List<String> items) {
         System.out.println("--- " + title + " ---");
         if (items.isEmpty()) {
             logger.info("Attempted to print an empty list for: " + title);
@@ -32,16 +37,13 @@ public class ReportService {
     }
 
     // Append results to a single file to keep all output data
-    public void saveToFile(String title, List<String> items) {
+    private void saveToFile(String title, List<String> items) {
         File file = new File(REPORT_DIRECTORY, DEFAULT_FILE_NAME );
         try (FileWriter writer = new FileWriter(file, true)) {
-
             writer.write(title + "\n");
-
             for (String item : items) {
                 writer.write("- " + item + "\n");
             }
-
             writer.write("\n");
             logger.info("Section '" + title + "' successfully appended to " + file.getPath());
         } catch (IOException e) {
