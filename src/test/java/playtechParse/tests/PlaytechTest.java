@@ -18,15 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlaytechTest {
     private WebDriver driver;
     private PlaytechWebsite site;
-    private ReportService report;
     private BrowserManager driverManager;
 
     @BeforeAll
     public void setup() {
         driverManager  = new BrowserManager();
         driver = driverManager.createDriver();
-        report = new ReportService();
-        report.deleteOldReport();
         site = new PlaytechWebsite(driver);
     }
 

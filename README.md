@@ -1,5 +1,7 @@
 # Playtech Automation Assignment
 
+[![Selenium Tests](https://github.com/valeriimykytenko/Playtech-Automation-Assignment/actions/workflows/TESTS.yml/badge.svg)](https://github.com/valeriimykytenko/Playtech-Automation-Assignment/actions/workflows/TESTS.yml)
+
 ## Overview
 
 This project is an automated test solution for the Playtech QA internship assignment.
