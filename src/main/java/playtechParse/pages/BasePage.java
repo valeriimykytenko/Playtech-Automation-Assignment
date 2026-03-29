@@ -10,8 +10,8 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * Base class for all page objects
- * Provides Selenium utilities like waits, scrolling and JS actions
+ * Base class for page object
+ * Provides Selenium utilities like waits
  */
 public class BasePage {
     protected WebDriver driver;
