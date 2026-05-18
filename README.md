@@ -1,10 +1,10 @@
-# Playtech Automation Assignment
+# Web Automation Framework
 
 [![Selenium Tests](https://github.com/valeriimykytenko/Playtech-Automation-Assignment/actions/workflows/TESTS.yml/badge.svg)](https://github.com/valeriimykytenko/Playtech-Automation-Assignment/actions/workflows/TESTS.yml)
 
 ## Overview
 
-This project is an automated test solution for the Playtech QA internship assignment.
+This project is an automated test solution.
 It uses Java, Selenium, and JUnit to validate website content and extract required data 
 
 ### Tech Stack
